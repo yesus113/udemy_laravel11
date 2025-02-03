@@ -17,6 +17,9 @@ return new class extends Migration
             $table->float('hyt_humd', 5, 2)->default(0);
             $table->timestamp('hyt_fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
             
+            $table->foreignId('configuration_id')->constrained()
+            ->onDelete('cascade');
+
         });
     }
 

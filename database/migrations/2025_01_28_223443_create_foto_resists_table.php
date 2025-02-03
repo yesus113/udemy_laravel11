@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('configuraciones', function (Blueprint $table) {
+        Schema::create('foto_resists', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->float('fot_intens_luz', 5, 2)->default(0);
+            $table->timestamp('fot_fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
+            
+            $table->foreignId('configuration_id')->constrained()
+            ->onDelete('cascade');
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('configuraciones');
+        Schema::dropIfExists('foto_resists');
     }
 };

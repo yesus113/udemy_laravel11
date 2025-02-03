@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('posted',['yes', 'not'])->default('not');
             $table->timestamps();
         
-            $table->foreingId('category_id')->constrained()
+            $table->foreignId('category_id')->constrained()
             ->onDelete('cascade');
         });
     }
