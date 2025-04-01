@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PrimerControlador extends Controller
+class HomeController extends Controller
 {
-    function index (){
+    public function index (){
+        
+        return view('home.template.index');
+    }
+   /* function index (){
         $posts = ['Base de datos', 'Tableau'];
     
         return view('contact', compact('posts'));
@@ -14,5 +18,5 @@ class PrimerControlador extends Controller
 
     function otro ($post){
         echo $post;
-    }
+    }*/
 }
