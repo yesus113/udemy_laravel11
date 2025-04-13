@@ -13,7 +13,7 @@ use App\Http\Controllers\sensores\Hyt_dht11Controller;
 use App\Http\Controllers\sensores\Proximidad_hcsr04Controller;
 use App\Http\Controllers\sensores\Temp_lm35Controller;
 use App\Http\Controllers\sensores\Uv_guva_s12sdController;
-//Piel 
+//Piel
 use App\Http\Controllers\piel\RecommendationController;
 use App\Http\Controllers\piel\Tipo_pielController;
 
