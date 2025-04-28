@@ -5,21 +5,21 @@
 @endsection
 
 @section ('content')
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <td>
+                <th>
                     ID
-                </td>
-                <td>
+                </th>
+                <th>
                     UV
-                </td>
-                <td>
+                </th>
+                <th>
                     FECHA
-                </td>
-                <td>
+                </th>
+                <th>
                     EQUIPO
-                </td>
+                </th>
             </tr>
         </thead>
             <tbody>
@@ -38,11 +38,11 @@
                             {{$g->configuration->con_equipo}}
                         </td>
                     </tr>
-                    
+
                 @endforeach
             </tbody>
     </table>
 
     {{$guva->links() }}
-   
+
 @endsection

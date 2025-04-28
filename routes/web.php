@@ -1,67 +1,59 @@
 <?php
-namespace App\Http\Controllers;
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\CategoryController;
-//sensores
+use App\Http\Controllers\Dashboard\PostController;
+//SENSORES
 use App\Http\Controllers\sensores\Aire_mq135Controller;
 use App\Http\Controllers\sensores\Color_tcs3200Controller;
 use App\Http\Controllers\sensores\ConfigurationController;
 use App\Http\Controllers\sensores\Foto_resistController;
 use App\Http\Controllers\sensores\Hyt_dht11Controller;
-use App\Http\Controllers\sensores\Proximidad_hcsr04Controller;
 use App\Http\Controllers\sensores\Temp_lm35Controller;
 use App\Http\Controllers\sensores\Uv_guva_s12sdController;
-//Piel
+// PIEL
 use App\Http\Controllers\piel\RecommendationController;
 use App\Http\Controllers\piel\Tipo_pielController;
-
-
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\UserAccessDashboardMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-//INDEX
-Route::get('home', [HomeController::class,'index']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-
-Route::group (['prefix' => 'dashboard'],function(){
-    //POSTS
-    Route::resource('post', PostController::class);
-    //CATEGORIES
-    Route::resource('category', CategoryController::class);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// -------------------- SENSORES URLs-----------------------//
-// MQ135
-Route::resource('mq135', Aire_mq135Controller::class);
+    Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', UserAccessDashboardMiddleware::class]], function () {
+        Route::resources([
+            'post' => PostController::class,
+            'category' => CategoryController::class,
+        ]);
+    });
 
-// TCS3200
-Route::resource('tcs3200', Color_tcs3200Controller::class);
+Route::group(['prefix' => 'sensor', 'middleware' => 'auth'], function () {
+    Route::resources([
+        'mq135' => Aire_mq135Controller::class,
+        'tcs3200' => Color_tcs3200Controller::class,
+        'config' => ConfigurationController::class,
+        'foto' => Foto_resistController::class,
+        'dht11' => Hyt_dht11Controller::class,
+        'lm35' => Temp_lm35Controller::class,
+        'guva' => Uv_guva_s12sdController::class
+    ]);
+});
 
-//Configuration -- Strong table
-Route::resource('config', ConfigurationController::class);
+Route::group(['prefix' => 'piel', 'middleware' => 'auth'], function () {
+    Route::resources([
+        'recommendation' => RecommendationController::class,
+        'tipoPiel' => Tipo_pielController::class,
+    ]);
+});
 
-// FOTOCELDA
-Route::resource('fotocelda', Foto_resistController::class);
-
-// DHT11
-Route::resource('dht11', Hyt_dht11Controller::class);
-
-// HCSR04
-Route::resource('hcsr04', Proximidad_hcsr04Controller::class);
-
-//LM35
-Route::resource('lm35', Temp_lm35Controller::class);
-
-//GUVAS12SD
-Route::resource('guva', Uv_guva_s12sdController::class);
-
-// -------------------- SKIN URLs -----------------------//
-//RECOMMENDATION
-Route::resource('recommendation', RecommendationController::class);
-
-// TIPO DE PIEL
-Route::resource('TipoPiel', Tipo_pielController::class);
+require __DIR__.'/auth.php';

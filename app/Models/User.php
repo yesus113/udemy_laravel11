@@ -33,12 +33,17 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    //Metodo para comprobar el Rol
+    public function isAdmin(): bool {
+        return $this->rol == 'admin';
+    }
 
     /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */
+
     protected function casts(): array
     {
         return [

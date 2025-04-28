@@ -13,7 +13,7 @@ class Aire_mq135Controller extends Controller
      */
     public function index()
     {
-        $mq135 = Aire_mq135::paginate(1);
+        $mq135 = Aire_mq135::paginate(10);
         return view('sensores.Aire_mq135.index', compact('mq135'));
     }
 

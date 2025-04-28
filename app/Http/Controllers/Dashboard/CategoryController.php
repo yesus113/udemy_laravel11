@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\StoreRequest;    
 use App\Http\Requests\Category\PutRequest;
 
 class CategoryController extends Controller

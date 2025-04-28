@@ -5,7 +5,7 @@
 @endsection
 
 @section ('content')
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <td>
@@ -19,7 +19,7 @@
                 </td>
             </tr>
         </thead>
-            <tbody> 
+            <tbody>
                 @foreach ($recommendation as $r)
                     <tr>
                         <td>
@@ -38,5 +38,5 @@
     </table>
 
     {{$recommendation->links() }}
-   
+
 @endsection

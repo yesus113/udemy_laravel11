@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ .table {
+     @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400
+ }
+ .table th {
+     @apply px-6 py-3 bg-gray-50 dark:bg-gray-800
+ }
+
+.table tr {
+    @apply border
+}
+
+.table td {
+    @apply px-6 py-4 whitespace-normal
+}
+.button {
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+}
+
+.h1{
+    @apply text-4xl mb-3 text-white
+}
+
+.label{
+    @apply mt-2 block
+}
+.form-control {
+    @apply block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+}
+
+.form-control-label {
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white
+}
+/*ESTILO BASE PARA LOS BOTONES*/
+.btn {
+    @apply border rounded px-3 py-2 text-white font-bold inline-block transition-all
+}
+
+.btn-danger {
+    @apply bg-red-600 hover:bg-red-800 border-red-600
+}
+
+.btn-success {
+    @apply bg-green-600 hover:bg-green-800 border-green-600
+}
+
+.btn-primary {
+    @apply bg-blue-600 hover:bg-blue-800 border-blue-600
+}
+
+.btn-warning {
+    @apply bg-yellow-600 hover:bg-yellow-800 border-yellow-600
+}
+
+.card {
+    @apply p-6 rounded shadow-sm
+}
+
+.card-black {
+    @apply bg-black
+}
+
+.card-success {
+    @apply bg-green-700
+}

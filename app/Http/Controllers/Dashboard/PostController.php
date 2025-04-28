@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Requests\Post\PutRequest;
+
+use App\Models\Post;
+use App\Models\Category;
+
 
 class PostController extends Controller
 {
@@ -16,40 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        session()->flush();
-        //session(['key' => 'value']);
+        
         $posts = Post::paginate(2);
         return view('dashboard.post.index', compact('posts'));
-
-        // $category = Category::find(1);
-
-        // dd($category->posts[0]->slug);
-        // $post = Post::find(1);
-        // $post->delete();
-
-        // $post->update(
-        //     [
-        //         'title' => 'new title',
-        //         'description' => 'new description',
-        //         'content' => 'content',
-        //         'image' => 'jpg',
-        //         'posted' => 'yes'
-        //     ]
-        // );
-
-        // Post::create(
-        //     // [
-        //     //     'title' => $request->all()['title'],
-        //     //     'slug' => $request->all()['slug'],
-        //     //     'description' => $request->all()['description'],
-        //     //     'content' => $request->all()['content'],
-        //     //     // 'image' => $request->all()['image'],
-        //     //     'posted' => $request->all()['posted'],
-        //     //     'category_id' => $request->all()['category_id'],
-        //     // ]
-        // );
-
-        return 'index';
     }
 
     /**

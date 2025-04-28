@@ -5,37 +5,37 @@
 @endsection
 
 @section ('content')
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <td>
+                <th>
                     ID
-                </td>
-                <td>
+                </th>
+                <th>
                     R
-                </td>
-                <td>
+                </th>
+                <th>
                     G
-                </td>
-                <td>
+                </th>
+                <th>
                     B
-                </td>
-                <td>
+                </th>
+                <th>
                     FECHA
-                </td>
-                <td>
+                </th>
+                <th>
                     CONFIGURATION
-                </td>
-                <td>
+                </th>
+                <th>
                     RIESGO
-                </td>
-                <td>
+                </th>
+                <th>
                     SENSIBILIDAD UV
-                </td>
+                </th>
             </tr>
         </thead>
-            
-            <tbody> 
+
+            <tbody>
                 @foreach ($tcs as $t)
                     <tr>
                         <td>
@@ -63,11 +63,11 @@
                             {{$t->tipo_piel->tip_sensibilidadUV}}
                         </td>
                     </tr>
-                    
+
                 @endforeach
             </tbody>
     </table>
 
     {{$tcs->links() }}
-   
+
 @endsection

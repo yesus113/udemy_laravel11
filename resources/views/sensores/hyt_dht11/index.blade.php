@@ -5,7 +5,7 @@
 @endsection
 
 @section ('content')
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <td>
@@ -28,27 +28,27 @@
             <tbody>
                 @foreach ($dht11 as $d)
                     <tr>
-                        <td>
+                        <th>
                             {{$d->id}}
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             {{$d->hyt_temp}}
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             {{$d->hyt_humd}}
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             {{$d->hyt_fecha }}
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             {{$d->configuration->con_equipo}}
-                        </td>
+                        </th>
                     </tr>
-                    
+
                 @endforeach
             </tbody>
     </table>
 
     {{$dht11->links() }}
-   
+
 @endsection

@@ -5,33 +5,33 @@
 @endsection
 
 @section ('content')
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <td>
+                <th>
                     ID
-                </td>
-                <td>
+                </th>
+                <th>
                     TIPO DE USUARIO
-                </td>
-                <td>
+                </th>
+                <th>
                     EQUIPO
-                </td>
-                <td>
+                </th>
+                <th>
                     FECHA DE ALTA
-                </td>
-                <td>
+                </th>
+                <th>
                     LATITUD
-                </td>
-                <td>
+                </th>
+                <th>
                     LONGITUD
-                </td>
-                <td>
+                </th>
+                <th>
                     NOMBRE DE USUARIO
-                </td>
-                <td>
+                </th>
+                <th>
                     CONTRASEÑA
-                </td>
+                </th>
             </tr>
         </thead>
             <tbody>
@@ -62,11 +62,11 @@
                             {{$c->con_password}}
                         </td>
                     </tr>
-                    
+
                 @endforeach
             </tbody>
     </table>
 
     {{$config->links() }}
-   
+
 @endsection

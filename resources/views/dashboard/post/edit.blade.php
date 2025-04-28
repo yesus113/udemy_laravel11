@@ -6,7 +6,7 @@
 
 @section ('content')
 
-//Manejo de errores
+{{-- Manejo de errores --}}
 
     @include('dashboard/fragment/_errors-form')
 

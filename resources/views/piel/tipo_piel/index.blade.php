@@ -5,7 +5,7 @@
 @endsection
 
 @section ('content')
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <td>
@@ -31,7 +31,7 @@
                 </td>
             </tr>
         </thead>
-            <tbody> 
+            <tbody>
                 @foreach ($piel as $p)
                     <tr>
                         <td>
@@ -56,12 +56,12 @@
                             {{$p->tip_protSolar}}
                         </td>
                     </tr>
-                    
+
                 @endforeach
             </tbody>
         </thead>
     </table>
 
     {{$piel->links() }}
-   
+
 @endsection

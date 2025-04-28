@@ -1,38 +1,38 @@
 @extends('dashboard.master')
 
-@section('header')
-    INDEX
-@endsection
-
 @section ('content')
-    <a href="{{route('post.create')}}" target="blank">Create</a>
-    <table>
+    <h1 class="h1">
+        Post
+    </h1>
+        <a class="btn btn-primary my-3" href="{{route('post.create')}}" target="blank">Create</a>
+
+    <table class="table">
         <thead>
             <tr>
-                <td>
+                <th>
                     ID
-                </td>
-                <td>
+                </th>
+                <th>
                     Title
-                </td>
-                <td>
+                </th>
+                <th>
                     Slug
-                </td>
-                <td>
+                </th>
+                <th>
                     Content
-                </td>
-                <td>
+                </th>
+                <th>
                     Posted
-                </td>
-                <td>
+                </th>
+                <th>
                     Category
-                </td>
-                <td>
+                </th>
+                <th>
                     Options
-                </td>
+                </th>
             </tr>
         </thead>
-            <tbody>
+        <tbody>
                 @foreach ($posts as $p)
                     <tr>
                         <td>
@@ -54,20 +54,21 @@
                             {{$p->category->title}}
                         </td>
                         <td>
-                            <a href="{{route('post.edit', $p)}}">Edit</a>
-                            <a href="{{route('post.show', $p)}}">Show</a>
-                            <form action="{{route('post.destroy', $p)}}" method="post">
+                            <a class="btn btn-success mt-3" href="{{route('post.edit', $p)}}">Edit</a>
+                            <a class="btn btn-warning mt-3" href="{{route('post.show', $p)}}">Show</a>
+                            <form action="{{ route('post.destroy', $p)}}" method="post">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit">Delete</button>
+                                <button class="btn btn-danger mt-3" type="submit">Delete</button>
                             </form>
-
                         </td>
                     </tr>
                 @endforeach
             </tbody>
     </table>
+    <div class="mt-3">
 
+    </div>
     {{$posts->links() }}
 
 @endsection

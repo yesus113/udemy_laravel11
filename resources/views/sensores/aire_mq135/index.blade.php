@@ -5,36 +5,39 @@
 @endsection
 
 @section ('content')
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <td>
+                <th>
                     ID
-                </td>
-                <td>
+                </th>
+                <th>
                     CO2
-                </td>
-                <td>
+                </th>
+                <th>
                     NH3
-                </td>
-                <td>
+                </th>
+                <th>
                     C2H5OH
-                </td>
-                <td>
+                </th>
+                <th>
                     TOLUENO
-                </td>
-                <td>
+                </th>
+                <th>
                     ALCOHOL
-                </td>
-                <td>
+                </th>
+                <th>
+                    NOx
+                </th>
+                <th>
                     FECHA
-                </td>
-                <td>
+                </th>
+                <th>
                     EQUIPO
-                </td>
+                </th>
             </tr>
         </thead>
-            <tbody> 
+            <tbody>
                 @foreach ($mq135 as $mq)
                     <tr>
                         <td>
@@ -69,5 +72,5 @@
             </tbody>
     </table>
     {{$mq135->links() }}
-   
+
 @endsection
