@@ -48,9 +48,6 @@ class PostController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Post $post)
     {
         $categories = Category::pluck('id', 'title');
@@ -76,9 +73,6 @@ class PostController extends Controller
         return to_route('post.index')->with('status', 'Post has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Post $post)
     {
         $post->delete();

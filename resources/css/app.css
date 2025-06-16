@@ -65,3 +65,7 @@
 .card-success {
     @apply bg-green-700
 }
+
+.card-white{
+    @apply bg-white
+}

@@ -1,10 +1,11 @@
 @extends('dashboard.master')
 
-@section('header')
-    INDEX-MQ135
-@endsection
+
 
 @section ('content')
+<h1 class="h1">
+    SENSOR-MQ135
+</h1>
     <table class="table">
         <thead>
             <tr>
@@ -53,7 +54,7 @@
                             {{$mq->air_C2H5OH}}
                         </td>
                         <td>
-                            {{$mq->air_toluelo}}
+                            {{$mq->air_tolueno}}
                         </td>
                         <td>
                             {{$mq->air_NOx}}

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\sensores\Configuration;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\Sensor\Configuration\StoreRequest;
+use App\Http\Requests\Sensor\Configuration\PutRequest;
+
 
 class ConfigurationController extends Controller
 {
@@ -14,55 +17,60 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
-        $config = Configuration::paginate(2);
+        $config = Configuration::paginate(10);
         return view('sensores.configuration.index', compact('config'));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function list()
+    {
+        $config = Configuration::paginate(10);
+        return view('sensores.configuration.list', compact('config'));
+
+    }
+
+    public function info()
+    {
+        return view('sensores.info');
+
+    }
+
     public function create()
     {
-        //
+        $config = new Configuration();
+        return view ('sensores/configuration/create', compact('config'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    
+    public function store(StoreRequest $request)
     {
-        //
+         Configuration::create($request->validated());
+        return to_route('config.index')->with('status', 'Configuration created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Configuration $configuration)
+    public function show(Configuration $config)
     {
-        //
+        return view('sensores.configuration.show', ['config'=> $config]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Configuration $configuration)
+    
+    public function edit(Configuration $config)
     {
-        //
+        return view ('sensores.configuration.edit', compact('config'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Configuration $configuration)
+    public function update(PutRequest $request, Configuration $config)
     {
-        //
+        $data = $request->validated();
+
+
+        $config->update($data);
+        return to_route('config.index')->with('status', 'Config has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Configuration $configuration)
+    public function destroy(Configuration $config)
     {
-        //
+        $config->delete();
+        return to_route('config.index')->with('status', 'Config has been deleted');
     }
 }

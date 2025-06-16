@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Configuration extends Model
 {
-    protected $fillable = ['con_tipo_user', 'con_equipo' , 'con_fechaAlta', 'con_latitud', 'con_logitud', 'con_user', 'con_password'];
+    public $timestamps = false;
+    protected $fillable = ['con_tipo_user', 'con_equipo' , 'con_fechaAlta', 'con_latitud', 'con_longitud', 'con_user', 'con_password'];
 
     function Aire_mq135()  {
         return $this->hasMany(Aire_mq135::class);

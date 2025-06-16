@@ -10,21 +10,25 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+    <!--map -->
+    
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
 </head>
+
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<div class="min-h-screen bg-gray-100 dark:bg-[#384358]">
     @include('layouts.navigation')
 
     <!-- Page Heading -->
     @isset($header)
-        <header class="bg-white dark:bg-gray-800 shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <br>
+        <x-card class="text-center text-red-50 bg-yellow-600 w-[450px] mx-auto text-3xl">
                 {{ $header }}
-            </div>
-        </header>
+        </x-card>
     @endisset
 
     <!-- Page Content -->
@@ -39,6 +43,7 @@
             <div class="mt-8">
                 @yield('content')
             </div>
+            
         </div>
         
     </main>

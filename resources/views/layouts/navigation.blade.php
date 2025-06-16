@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white dark:bg-[#021024] border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -16,16 +16,28 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
+                    {{--<x-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
                         {{ __('Post') }}
-                    </x-nav-link>
+                    </x-nav-link>--}}
 
-                    <x-nav-link :href="route('category.index')" :active="request()->routeIs('category')">
+                   {{-- <x-nav-link :href="route('category.index')" :active="request()->routeIs('category')">
                         {{ __('Category') }}
-                    </x-nav-link>
+                    </x-nav-link>--}}
 
                     <x-nav-link :href="route('mq135.index')" :active="request()->routeIs('mq135.index')">
                         {{ __('Sensores') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('config.index')" :active="request()->routeIs('config.index')">
+                        {{ __('Dispositivos') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('config.list')" :active="request()->routeIs('config.list')">
+                        {{ __('Configurar') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('config.info')" :active="request()->routeIs('config.info')">
+                        {{ __('Informacion') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -118,6 +130,7 @@
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
+                
             </div>
         </div>
     </div>
