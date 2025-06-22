@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 class Show extends Component
 {
     //public Post $post;
-    protected $except = ['post'];
+    protected $except = [''];
     public function __construct(public Post $post, public string $title = '')
     {
         
