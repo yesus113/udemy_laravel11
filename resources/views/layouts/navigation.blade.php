@@ -16,17 +16,16 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    {{--<x-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
-                        {{ __('Post') }}
-                    </x-nav-link>--}}
+                    <x-nav-link :href="route('charts')" :active="request()->routeIs('charts')">
+                        {{ __('Graficas') }}
+                    </x-nav-link>
 
-                   {{-- <x-nav-link :href="route('category.index')" :active="request()->routeIs('category')">
-                        {{ __('Category') }}
-                    </x-nav-link>--}}
-
-                    <x-nav-link :href="route('mq135.index')" :active="request()->routeIs('mq135.index')">
+                    
+                    <x-nav-link :href="route('sensors')" :active="request()->routeIs('sensors')">
                         {{ __('Sensores') }}
                     </x-nav-link>
+                    
+                
 
                     <x-nav-link :href="route('config.index')" :active="request()->routeIs('config.index')">
                         {{ __('Dispositivos') }}
@@ -95,16 +94,24 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
-                {{ __('Post') }}
+            <x-responsive-nav-link :href="route('charts')" :active="request()->routeIs('charts')">
+                {{ __('Graficas') }}
             </x-responsive-nav-lin>
 
-            <x-responsive-nav-link :href="route('category.index')" :active="request()->routeIs('category')">
-                {{ __('Category') }}
+            <x-responsive-nav-link :href="route('charts')" :active="request()->routeIs('charts')">
+                {{ __('Sensores') }}
+            </x-responsive-nav-lin>
+
+            <x-responsive-nav-link :href="route('config.index')" :active="request()->routeIs('config.index')">
+                {{ __('Dispositivos') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('mq135.index')" :active="request()->routeIs('mq135.index')">
-                {{ __('Sensores') }}
+            <x-responsive-nav-link :href="route('config.list')" :active="request()->routeIs('Config.list')">
+                {{ __('Configurar') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('config.info')" :active="request()->routeIs('config.info')">
+                {{ __('Informacion') }}
             </x-responsive-nav-link>
         </div>
 

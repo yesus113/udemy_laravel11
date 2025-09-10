@@ -4,7 +4,8 @@ namespace App\View\Components\dashboard;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-//Models
+use Illuminate\Support\Facades\Auth;
+// Models
 use App\Models\sensores\Hyt_dht11;
 use App\Models\sensores\Aire_mq135;
 use App\Models\sensores\Foto_resist;
@@ -19,27 +20,76 @@ class graficas extends Component
     public $foto_resist;
     public $lm35; 
     public $guva;
-    
+    protected $userConfigurations = [];
+
     public function __construct()
     {
-        //DHT11
-        $ultimo = Hyt_dht11::latest('hyt_fecha')->first();
-        $this->temperatura = $ultimo->hyt_temp ?? 0;
-        $this->humedad = $ultimo->hyt_humd ?? 0;
-        //MQ135
-        $lastMq135 = Aire_mq135::latest('air_fecha')->first();
-        if ($lastMq135) {
-            $this->mq135 = $lastMq135->toArray(); //convierte todos los campos en array asociativo
+        // Obtener configuraciones del usuario (si es admin)
+        if (Auth::check() && !Auth::user()->isSuperAdmin()) {
+            $this->userConfigurations = Auth::user()->configurations()->pluck('id')->toArray();
         }
-        //Fotoresistencia
-        $lastft = Foto_resist::latest('fot_fecha')->first();
-        $this->foto_resist = $lastft->fot_intens_luz ?? 0;
-        //LM35
-        $lastlm35 = Temp_lm35::latest('tem_fecha')->first();
-        $this->lm35 = $lastlm35->tem_data ?? 0;
-        //GUVA UV
-        $lastguva = Uv_guva_s12sd::latest('uv_fecha')->first();
-        $this->guva = $lastguva->uv_data ?? 0;
+
+        $this->loadSensorData();
+    }
+
+    protected function loadSensorData()
+    {
+        // DHT11 (Temperatura y Humedad)
+        $this->loadLastRecord(
+            Hyt_dht11::class,
+            'hyt_fecha',
+            fn($record) => [
+                'temperatura' => $record->hyt_temp ?? 0,
+                'humedad' => $record->hyt_humd ?? 0
+            ]
+        );
+
+        // MQ135
+        $this->mq135 = $this->getLastRecord(
+            Aire_mq135::class,
+            'air_fecha'
+        )?->toArray() ?? [];
+
+        // Fotoresistencia
+        $this->foto_resist = $this->getLastRecord(
+            Foto_resist::class,
+            'fot_fecha'
+        )?->fot_intens_luz ?? 0;
+
+        // LM35
+        $this->lm35 = $this->getLastRecord(
+            Temp_lm35::class,
+            'tem_fecha'
+        )?->tem_data ?? 0;
+
+        // GUVA UV
+        $this->guva = $this->getLastRecord(
+            Uv_guva_s12sd::class,
+            'uv_fecha'
+        )?->uv_data ?? 0;
+    }
+
+    protected function getLastRecord($model, $dateField)
+    {
+        $query = $model::latest($dateField);
+
+        if (!empty($this->userConfigurations)) {
+            $query->whereIn('configuration_id', $this->userConfigurations);
+        }
+
+        return $query->first();
+    }
+
+    protected function loadLastRecord($model, $dateField, $callback)
+    {
+        $record = $this->getLastRecord($model, $dateField);
+        
+        if ($record) {
+            $data = $callback($record);
+            foreach ($data as $key => $value) {
+                $this->$key = $value;
+            }
+        }
     }
 
     public function render()

@@ -13,7 +13,7 @@ class Tipo_pielController extends Controller
      */
     public function index()
     {
-        $piel = Tipo_piel::paginate(1);
+        $piel = Tipo_piel::paginate(6);
         return view('piel.tipo_piel.index', compact('piel'));
     }
 

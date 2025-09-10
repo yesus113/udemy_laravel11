@@ -8,18 +8,37 @@ use Illuminate\Http\Request;
 
 class Foto_resistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function latest()
     {
-        $ft = Foto_resist::paginate(2);
-        return view('sensores.foto_resist.index', compact('ft'));
+        $ultimo = Foto_resist::orderBy('fot_fecha', 'desc')->first();
+
+        return response()->json([
+            'x' => strtotime($ultimo->fot_fecha) * 1000,
+            'y' => floatval($ultimo->fot_intens_luz),
+            ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function lastTwenty()
+    {
+        $datos = Foto_resist::orderBy('fot_fecha', 'desc')->take(5)->get()->reverse()->values();
+
+        $formato = $datos->map(function ($item) {
+            return [
+                'x' => strtotime($item->fot_fecha) * 1000,
+                'y' => floatval($item->fot_data),
+                
+            ];
+        });
+
+        return response()->json($formato);
+    }
+    public function index()
+    {
+        $ft = Foto_resist::paginate(20);
+        return view('sensores.foto_resist.table', compact('ft'));
+    }
+
+    
     public function create()
     {
         //

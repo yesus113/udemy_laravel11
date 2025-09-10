@@ -27,7 +27,6 @@
                 </x-card>
                 <br>
                 <x-dashboard.graficas>
-
                 </x-dashboard.graficas>
 
             </div>

@@ -13,7 +13,7 @@ class RecommendationController extends Controller
      */
     public function index()
     {
-        $recommendation = Recommendation::paginate(1);
+        $recommendation = Recommendation::paginate(11);
         return view('piel.recommendation.index', compact('recommendation'));
     }
 

@@ -14,16 +14,13 @@ class Color_tcs3200Controller extends Controller
      */
     public function index()
     {
-        $tcs = Color_tcs3200::paginate(2);
-        return view('sensores.color_tcs3200.index', compact('tcs'));
+        $tcs = Color_tcs3200::paginate(10);
+        return view('sensores.color_tcs3200.table', compact('tcs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        
     }
 
     /**

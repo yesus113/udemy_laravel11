@@ -8,60 +8,81 @@ use Illuminate\Http\Request;
 
 class Aire_mq135Controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+   public function latest()
+{
+    $ultimo = Aire_mq135::orderBy('air_fecha', 'desc')->first();
+
+    return response()->json([
+        'x' => strtotime($ultimo->air_fecha) * 1000,
+        'y' => floatval($ultimo->air_CO2),
+        'y1' => floatval($ultimo->air_NH3),
+        'y2' => floatval($ultimo->air_C2H5OH),
+        'y3' => floatval($ultimo->air_tolueno),
+        'y4' => floatval($ultimo->air_NOx),
+    ]);
+}
+
+public function lastTwenty()
+{
+    $datos = Aire_mq135::orderBy('air_fecha', 'desc')->take(5)->get()->reverse()->values();
+
+    $formato = $datos->map(function ($item) {
+        return [
+            'x' => strtotime($item->air_fecha) * 1000,
+            'y' => floatval($item->air_CO2),
+            'y1' => floatval($item->air_NH3),
+            'y2' => floatval($item->air_C2H5OH),
+            'y3' => floatval($item->air_tolueno),
+            'y4' => floatval($item->air_NOx)
+
+        ];
+    });
+
+    return response()->json($formato);
+}
+
+
+    public function index(Request $request)
     {
-        $mq135 = Aire_mq135::paginate(10);
-        return view('sensores.Aire_mq135.index', compact('mq135'));
+        $query = Aire_mq135::with('configuration'); 
+
+    if ($request->filled('fecha')) {
+        $query->whereDate('air_fecha', $request->fecha);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    $mq135 = $query->orderBy('air_fecha', 'desc')->paginate(20);
+
+    return view('sensores.Aire_mq135.table', compact('mq135'));
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Aire_mq135 $aire_mq135)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Aire_mq135 $aire_mq135)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(Request $request, Aire_mq135 $aire_mq135)
     {
-        //
+        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Aire_mq135 $aire_mq135)
     {
-        //
     }
 }

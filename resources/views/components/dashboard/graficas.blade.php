@@ -50,23 +50,28 @@
         <div id="container-lm35">
         </div>
     </div>
+    <div class="bg-gray-100 p-4 rounded h-72 overflow-hidden">
+        <div id="container-guva" >
+        </div>
+    </div>
 </div>
 
 <script>
 // Datos iniciales desde PHP
-let temperaturaActual = {{ $temperatura }};
-let humedadActual = {{ $humedad }};
+let temperaturaActual = {{ $temperatura ?? 0}};
+let humedadActual = {{ $humedad ?? 0}};
 //
-let CO2Actual = {{ $mq135['air_CO2']}};
-let NH3Actual = {{ $mq135['air_NH3']}};
-let C2H5OHActual = {{ $mq135['air_C2H5OH']}};
-let toluenoActual = {{ $mq135['air_tolueno']}};
-let NOxActual = {{ $mq135['air_NOx']}};
-let alcoholActual = {{ $mq135['air_alcohol']}};
+let CO2Actual = {{ $mq135['air_CO2'] ?? 0}};
+let NH3Actual = {{ $mq135['air_NH3'] ?? 0}};
+let C2H5OHActual = {{ $mq135['air_C2H5OH'] ?? 0}};
+let toluenoActual = {{ $mq135['air_tolueno'] ?? 0}};
+let NOxActual = {{ $mq135['air_NOx'] ?? 0}};
+let alcoholActual = {{ $mq135['air_alcohol'] ?? 0}};
 //
-let FTActual = {{ $foto_resist}};
+let FTActual = {{ $foto_resist ?? 0}};
 //lm35
-let lm35Actual = {{$lm35}};
+let lm35Actual = {{$lm35 ?? 0}};
+let guvaActual = {{$guva ?? 0}};
 
 
 // Inicializar gráficas
@@ -84,12 +89,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 100,
             title: { text: '°C' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 0, to: 30, color: '#2ecc71' },  // Azul (frío)
+                { from: 30, to: 60, color: '#e67e22' }, // Verde (normal)
+                { from: 60, to: 100, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -137,12 +142,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 50000000,
             title: { text: 'ppm' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 15000000, to: 35000000, color: '#3498db' },  // Azul (frío)
+                { from: 0, to: 15000000, color: '#2ecc71' }, // Verde (normal)
+                { from: 35000000, to: 50000000, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -163,12 +168,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 1500000000,
             title: { text: 'ppm' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 500000000, to:1000000000, color: '#3498db' },  // Azul (frío)
+                { from: 0, to: 500000000, color: '#2ecc71' }, // Verde (normal)
+                { from: 1000000000, to: 1500000000, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -189,12 +194,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 1000000000,
             title: { text: 'ppm' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 250000000, to: 750000000, color: '#3498db' },  // Azul (frío)
+                { from: 0, to: 250000000, color: '#2ecc71' }, // Verde (normal)
+                { from: 750000000, to: 1000000000, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -215,12 +220,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 100000000,
             title: { text: 'ppm' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 25000000, to: 70000000, color: '#3498db' },  // Azul (frío)
+                { from: 0, to: 25000000, color: '#2ecc71' }, // Verde (normal)
+                { from: 70000000, to: 100000000, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -241,12 +246,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 500000000,
             title: { text: 'ppm' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 200000000, to: 400000000, color: '#3498db' },  // Azul (frío)
+                { from: 0, to: 200000000, color: '#2ecc71' }, // Verde (normal)
+                { from: 400000000, to: 1000000000, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -267,12 +272,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 1000000000,
             title: { text: '%' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 400000000, to: 800000000, color: '#3498db' },  // Azul (frío)
+                { from: 0, to: 400000000, color: '#2ecc71' }, // Verde (normal)
+                { from: 800000000, to: 1000000000, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -293,12 +298,12 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 1000,
             title: { text: 'LX' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 0, to: 300, color: '#3498db' },  // Azul (frío)
+                { from: 300, to: 600, color: '#2ecc71' }, // Verde (normal)
+                { from: 600, to: 1000, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
@@ -319,17 +324,45 @@ function initGraficas() {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 100,
             title: { text: '°C' },
             plotBands: [
-                { from: 0, to: 15, color: '#3498db' },  // Azul (frío)
-                { from: 15, to: 30, color: '#2ecc71' }, // Verde (normal)
-                { from: 30, to: 50, color: '#e74c3c' }  // Rojo (caliente)
+                { from: 0, to: 30, color: '#3498db' },  // Azul (frío)
+                { from: 30, to: 60, color: '#2ecc71' }, // Verde (normal)
+                { from: 60, to: 100, color: '#e74c3c' }  // Rojo (caliente)
             ]
         },
         series: [{
             name: 'lm35',
             data: [lm35Actual],
+            tooltip: { valueSuffix: '°C' }
+        }]
+    });
+
+    Highcharts.chart('container-guva', {
+        chart: { type: 'gauge' },
+        title: { text: 'INDICE UV' },
+        pane: {
+            startAngle: -90,
+            endAngle: 90,
+            background: null,
+            size: '100%'
+        },
+        yAxis: {
+            min: 0,
+            max: 12,
+            title: { text: 'UV' },
+            plotBands: [
+                { from: 0, to: 2, color: '#3498db' },  // Azul (frío)
+                { from: 2, to: 5, color: '#2ecc71' }, // Verde (normal)
+                { from: 5, to: 7, color: '#e74c3c' },  // Rojo (caliente)
+                { from: 7, to: 10, color: '#e74c3c' },
+                { from: 10, to: 12, color: '#e74c3c' } 
+            ]
+        },
+        series: [{
+            name: 'guva',
+            data: [guvaActual],
             tooltip: { valueSuffix: '°C' }
         }]
     });
@@ -351,6 +384,7 @@ function actualizarDatos() {
             alcoholActual = data.alcohol;
             FTActual = data.FT;
             lm35Actual = data.lm35;
+            guvaActual = data.guva;
             
             
             // Actualizar gráficas
@@ -364,13 +398,13 @@ function actualizarDatos() {
             Highcharts.charts[7].series[0].points[0].update(alcoholActual);
             Highcharts.charts[8].series[0].points[0].update(FTActual);
             Highcharts.charts[9].series[0].points[0].update(lm35Actual);
+            Highcharts.charts[10].series[0].points[0].update(guvaActual);
         });
 }
 
 // Iniciar gráficas cuando la página cargue
 document.addEventListener('DOMContentLoaded', function() {
     initGraficas();
-    // Actualizar cada 5 segundos
     setInterval(actualizarDatos, 5000);
 });
 </script>

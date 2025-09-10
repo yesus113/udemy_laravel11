@@ -9,10 +9,13 @@
 <label for="" class="form-control-label">Longitud</label>
 <input class="form-control" type="text" name="con_longitud" value="{{ old('con_longitud', $config->con_longitud) }}">
 
-<label for="" class="form-control-label">Nombre de Usuario</label>
-<input class="form-control" type="text" name="con_user" value="{{ old('con_user', $config->con_user) }}">
+<label for="" class="form-control-label">Usuario</label>
+<select class="form-control" name="user_id">
 
-<label for="" class="form-control-label"> Contraseña</label>
-<input class="form-control" type="text" name="con_password" value="{{ old('con_password', $config->con_password) }}">
+    @foreach ($user as $name => $id)
+        <option {{ old('user_id', $config->user_id) == $id ? 'selected' : '' }} value="{{ $id }}">
+            {{ $name }}</option>
+    @endforeach
+</select>
 
 <button class="btn btn-success my-3" type="submit">Send</button>

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Color_tcs3200 extends Model
 {
+
+    public $timestamps = false;
     protected $fillable = ['col_R', 'col_G', 'col_B','configuration_id','col_fecha', 'tipo_piel_id'];
 
     public function configuration()  {

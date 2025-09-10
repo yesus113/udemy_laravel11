@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\sensores\Configuration;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,6 +39,10 @@ class User extends Authenticatable
         return $this->rol == 'admin';
     }
 
+    public function isSuperAdmin(): bool {
+        return $this->rol == 'Sadmin';
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -51,4 +56,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function configurations()
+{
+    return $this->hasMany(Configuration::class);
+}
 }

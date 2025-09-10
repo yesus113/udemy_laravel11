@@ -3,12 +3,16 @@
 namespace App\Models\sensores;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Configuration extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['con_tipo_user', 'con_equipo' , 'con_fechaAlta', 'con_latitud', 'con_longitud', 'con_user', 'con_password'];
+    protected $fillable = ['con_tipo_user', 'con_equipo' , 'con_fechaAlta', 'con_latitud', 'con_longitud', 'user_id'];
 
+    public function user(){
+    return $this->belongsTo(User::class);
+    }
     function Aire_mq135()  {
         return $this->hasMany(Aire_mq135::class);
     }

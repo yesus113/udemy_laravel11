@@ -8,13 +8,35 @@ use Illuminate\Http\Request;
 
 class Temp_lm35Controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function latest()
+    {
+        $ultimo = Temp_lm35::orderBy('tem_fecha', 'desc')->first();
+
+        return response()->json([
+            'x' => strtotime($ultimo->tem_fecha) * 1000,
+            'y' => floatval($ultimo->tem_data),
+            ]);
+    }
+
+    public function lastTwenty()
+    {
+        $datos = Temp_lm35::orderBy('tem_fecha', 'desc')->take(5)->get()->reverse()->values();
+
+        $formato = $datos->map(function ($item) {
+            return [
+                'x' => strtotime($item->tem_fecha) * 1000,
+                'y' => floatval($item->tem_data),
+                
+            ];
+        });
+
+        return response()->json($formato);
+    }
+
     public function index()
     {
-        $lm35 = Temp_lm35::paginate(2);
-        return view('sensores.temp_lm35.index', compact('lm35'));
+        $lm35 = Temp_lm35::paginate(20);
+        return view('sensores.temp_lm35.table', compact('lm35'));
     }
 
     /**

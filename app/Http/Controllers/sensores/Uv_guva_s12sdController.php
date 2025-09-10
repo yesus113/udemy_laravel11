@@ -8,13 +8,34 @@ use Illuminate\Http\Request;
 
 class Uv_guva_s12sdController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function latest()
+    {
+        $ultimo = Uv_guva_s12sd::orderBy('uv_fecha', 'desc')->first();
+
+        return response()->json([
+            'x' => strtotime($ultimo->uv_fecha) * 1000,
+            'y' => floatval($ultimo->uv_data),
+            ]);
+    }
+    
+    public function lastTwenty()
+    {
+        $datos = Uv_guva_s12sd::orderBy('uv_fecha', 'desc')->take(5)->get()->reverse()->values();
+
+        $formato = $datos->map(function ($item) {
+            return [
+                'x' => strtotime($item->uv_fecha) * 1000,
+                'y' => floatval($item->uv_data),
+                
+            ];
+        });
+
+        return response()->json($formato);
+    }
     public function index()
     {
-        $guva = Uv_guva_s12sd::paginate(2);
-        return view('sensores.uv_guva_s12sd.index', compact('guva'));
+        $guva = Uv_guva_s12sd::paginate(20);
+        return view('sensores.uv_guva_s12sd.table', compact('guva'));
     }
 
     /**
