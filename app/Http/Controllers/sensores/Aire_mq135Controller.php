@@ -52,7 +52,7 @@ public function lastTwenty()
 
     $mq135 = $query->orderBy('air_fecha', 'desc')->paginate(20);
 
-    return view('sensores.Aire_mq135.table', compact('mq135'));
+    return view('sensores.aire_mq135.table', compact('mq135'));
     }
 
     public function create()

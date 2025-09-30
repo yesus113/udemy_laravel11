@@ -13,13 +13,14 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::resource('category', ApiCategoryController::class)->except(['create', 'edit']);
 Route::get('category/all', [ApiCategoryController::class, 'all']);
 Route::get('category/slug/{slug}', [ApiCategoryController::class, 'slug']);
-Route::resource('category', ApiCategoryController::class)->except(['create', 'edit']);
+
 
 Route::get('post/all', [ApiPostController::class, 'all']);
 Route::get('post/slug/{slug}', [ApiPostController::class, 'slug']);
-Route::resource('post', ApiPostController::class)->except(['create', 'edit']);
+//Route::resource('post', ApiPostController::class)->except(['create', 'edit']);
 
 
 Route::post('sensor-data', [SensorController::class, 'storeData']);//sensores ambientales 
@@ -36,7 +37,4 @@ Route::post('skin-data', [SkinController::class, 'storeSkin']);
 
 //Route::get('esp32-data/{equipoId}', [ESP32Controller::class, 'getRecomendacion']);
 
-
-// Ruta protegida por Sanctum
-Route::middleware('auth:sanctum')->get('esp32-data', [ESP32Controller::class, 'getRecomendacion']);
 

@@ -98,7 +98,7 @@
                 {{ __('Graficas') }}
             </x-responsive-nav-lin>
 
-            <x-responsive-nav-link :href="route('charts')" :active="request()->routeIs('charts')">
+            <x-responsive-nav-link :href="route('charts')" :active="request()->routeIs('sensors')">
                 {{ __('Sensores') }}
             </x-responsive-nav-lin>
 

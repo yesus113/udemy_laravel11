@@ -29,13 +29,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// MOVER A API.PHP
 Route::get('/ultimo-registro-sensor', function() {
+
     $userConfigurations = [];
     if (Auth::check() && !Auth::user()->isSuperAdmin()) {
         $userConfigurations = Auth::user()->configurations()->pluck('id')->toArray();
     }
 
-    // Función helper para consultar el último registro
     $getLastRecord = function($model, $dateField) use ($userConfigurations) {
         $query = $model::latest($dateField);
         if (!empty($userConfigurations)) {
@@ -52,6 +53,8 @@ Route::get('/ultimo-registro-sensor', function() {
     $lastguva = $getLastRecord(Uv_guva_s12sd::class, 'uv_fecha');
 
     return response()->json([
+        
+        //DHT11
         'temperatura' => $ultimo->hyt_temp ?? 0,
         'humedad' => $ultimo->hyt_humd ?? 0,
         // MQ135
@@ -80,73 +83,67 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-    Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', UserAccessDashboardMiddleware::class]], function () {
-        Route::resources([
-            'post' => PostController::class,
-            'category' => CategoryController::class,
-        ]);
-        Route::get('', function(){
-            return view ('dashboard');
-        })->middleware(['auth'])->name('dashboard');
-    });
     
-    Route::group(['prefix' => 'blog'], function () {
-
+    /*Route::group(['prefix' => 'blog'], function () 
+    {
         Route::get('',[BlogController::class, 'index'])->name('blog.index');
-         Route::get('detail/{post}',[BlogController::class, 'show'])->name('blog.show');
-           
-    });
+        Route::get('detail/{post}',[BlogController::class, 'show'])->name('blog.show');
+    });*/
 
 
 Route::group(['prefix' => 'sensor', 'middleware' => 'auth'], function () {
     Route::resources([
-        'mq135' => Aire_mq135Controller::class,
+        //Tablas 
+        'mq135' => Aire_mq135Controller::class, 
         'tcs3200' => Color_tcs3200Controller::class,
-        'config' => ConfigurationController::class,
+        'config' => ConfigurationController::class, 
         'foto' => Foto_resistController::class,
-        'dht11' => Hyt_dht11Controller::class,
+        'dht11' => Hyt_dht11Controller::class, 
         'lm35' => Temp_lm35Controller::class,
         'guva' => Uv_guva_s12sdController::class
     ]);
+
+    //Model Configurations
     Route::get('configuration/list', [ConfigurationController::class, 'list'])->name('config.list');
     Route::get('configuration/info', [ConfigurationController::class, 'info'])->name('config.info');
     Route::get('configuration/equipos', [ConfigurationController::class, 'equipo'])->name('config.equip');
-    Route::get('/index-sensors', function () { return view('sensores/index');})->name('sensors');
-   
-
+    Route::get('/index-sensors', function () { return view('sensores.index');})->name('sensors');
 });
 
 Route::group(['prefix' => 'piel', 'middleware' => 'auth'], function () {
     Route::resources([
         'recommendation' => RecommendationController::class,
-        'tipoPiel' => Tipo_pielController::class,
-    ]);
+        'tipoPiel' => Tipo_pielController::class,]);
 });
 
 require __DIR__.'/auth.php';
 
 //Graficas
 Route::group(['prefix' => 'chart', ], function () {
-    Route::get('/', function () { return view('charts/index');})->name('charts');
-    Route::get('/Tpiel', function () { return view('charts/tipoPiel');})->name('tipoPiel'); 
-    Route::get('/TColor', function () { return view('charts/colorPiel');})->name('colorPiel');
-    Route::get('/Cross', function () { return view('charts/cruceSensores');})->name('cross');
-    // Index per sensor:)
-    Route::get('/mq135/index', function () { return view('sensores/aire_mq135/index');})->name('mq135.TGR');
-    Route::get('/dht11/index', function () { return view('sensores/hyt_dht11/index');})->name('dht11.TGR');
-    Route::get('/guva/index', function () { return view('sensores/uv_guva_s12sd/index');})->name('guva.TGR');
-    Route::get('/lm35/index', function () { return view('sensores/temp_lm35/index');})->name('lm35.TGR');
-    Route::get('/foto/index', function () { return view('sensores/foto_resist/index');})->name('foto.TGR');
-    
-});
 
-Route::get('/debug-data', function() {
+    Route::get('/', function () { return view('charts.index');})->name('charts');
+
+    //GRAFICAS DE ANALISIS 
+    Route::get('/Tpiel', function () { return view('charts.tipoPiel');})->name('tipoPiel'); 
+    Route::get('/TColor', function () { return view('charts.colorPiel');})->name('colorPiel');
+    Route::get('/Cross', function () { return view('charts.cruceSensores');})->name('cross');
+
+    // INDEX POR SENSOR GRAFICAS GAUGE
+    Route::get('/mq135/index', function () { return view('sensores.aire_mq135.index');})->name('mq135.TGR');
+    Route::get('/dht11/index', function () { return view('sensores.hyt_dht11.index');})->name('dht11.TGR');
+    Route::get('/guva/index', function () { return view('sensores.uv_guva_s12sd.index');})->name('guva.TGR');
+    Route::get('/lm35/index', function () { return view('sensores.temp_lm35.index');})->name('lm35.TGR');
+    Route::get('/foto/index', function () { return view('sensores.foto_resist.index');})->name('foto.TGR');
+    });
+
+/*Route::get('/debug-data', function() {
     $data = DB::table('color_tcs3200s')
         ->select(DB::raw('MONTH(col_fecha) as month'), DB::raw('COUNT(*) as count'))
         ->whereYear('col_fecha', date('Y'))
         ->groupBy('month')
         ->get();
-});
+});*/
+
 // Grafica de linea tiempo real
 //MQ135
  Route::get('/mq135/latest', [Aire_mq135Controller::class, 'latest'])->name('mq135.latest');
@@ -161,9 +158,5 @@ Route::get('/debug-data', function() {
  Route::get('/lm35/latest', [Temp_lm35Controller::class, 'latest'])->name('lm35.latest');
  Route::get('/lm35/last20', [Temp_lm35Controller::class, 'lastTwenty']);
  //FOTO
- Route::get('/foto/latest', [Foto_resistController::class, 'latest'])->name('lm35.latest');
+ Route::get('/foto/latest', [Foto_resistController::class, 'latest'])->name('foto.latest');
  Route::get('/foto/last20', [Foto_resistController::class, 'lastTwenty']);
-
-
- 
-

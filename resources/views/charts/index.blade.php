@@ -28,7 +28,7 @@
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
             <a href="{{ route('colorPiel') }}">
                 <br>
-                <img src="{{ asset('static/img/charts/coloPiel.jpg') }}" alt="Sensor DHT11"
+                <img src="{{ asset('static/img/charts/colorPiel.jpg') }}"
                     class="w-auto h-auto object-contain"></a>
             <div class="p-5 text-center">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Gráfica Color Piel</h5>
@@ -51,7 +51,7 @@
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
             <a href="{{ route('cross') }}">
                 <br>
-                <img src="{{ asset('static/img/charts/tipoPiel.jpg') }}" alt="Sensor DHT11"
+                <img src="{{ asset('static/img/charts/cruzes.jpg') }}" alt=
                     class="w-auto h-auto object-contain">
             </a>
             <div class="p-5 text-center">

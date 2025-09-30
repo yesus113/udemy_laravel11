@@ -20,7 +20,7 @@
         <div class=" justify-center w-full h-full">
 
             <div>
-                <x-charts.tipo-piel-chart />
+                <x-charts.piel-chart-nuevo />
             </div>
         </div>
         <br>

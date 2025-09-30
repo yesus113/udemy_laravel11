@@ -12,47 +12,44 @@ use App\Models\sensores\Uv_guva_s12sd;
 class guva extends Component
 {
     public $guvaValue;
-    protected $userConfigurations = [];
+
     public function __construct()
     {
-        if (Auth::check() && !Auth::user()->isSuperAdmin()) {
-            $this->userConfigurations = Auth::user()->configurations()->pluck('id')->toArray();
-        }
+       $this->guvaValue = 0;
         $this->loadSensorData(); 
     }
 
     protected function loadSensorData()
     {
-        $this->guvaValue = $this->getLastRecord(
-            Uv_guva_s12sd::class,
-            'uv_fecha'
-        )?->uv_data ?? 0;
-    }
-
-    protected function getLastRecord($model, $dateField)
-    {
-        $query = $model::latest($dateField);
-
-        if (!empty($this->userConfigurations)) {
-            $query->whereIn('configuration_id', $this->userConfigurations);
-        }
-        return $query->first();
-    }
-
-    protected function loadLastRecord($model, $dateField, $callback)
-    {
-        $record = $this->getLastRecord($model, $dateField);
-        
-        if ($record) {
-            $data = $callback($record);
-            foreach ($data as $key => $value) {
-                $this->$key = $value;
+        try {
+            $userConfigurations = [];
+            
+            if (Auth::check() && !Auth::user()->isSuperAdmin()) {
+                $userConfigurations = Auth::user()->configurations()->pluck('id')->toArray();
             }
+
+            $query = Uv_guva_s12sd::latest('uv_fecha');
+            
+            if (!empty($userConfigurations)) {
+                $query->whereIn('configuration_id', $userConfigurations);
+            }
+            
+            $lastRecord = $query->first();
+            
+            if ($lastRecord && isset($lastRecord->uv_data)) {
+                $this->guvaValue = (float)$lastRecord->uv_data;
+            }
+            
+        } catch (\Exception $e) {
+            $this->guvaValue = 0;
         }
     }
+
 
     public function render()
     {
-        return view('components.gauge.guva');
+        return view('components.gauge.guva', [
+           'guvaValue'  => $this->guvaValue
+        ]);
     }
 }

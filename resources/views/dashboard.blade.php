@@ -18,7 +18,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-300 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-red-50 dark:text-gray-900">
-                    {{ __('BIENVENIDO BRO!') }}
+                    {{ __('BIENVENIDO!') }}
                 </div>
                 <x-card class="text-center text-red-50 bg-gray-600 w-[450px] mx-auto text-3xl">
                     @slot('card')

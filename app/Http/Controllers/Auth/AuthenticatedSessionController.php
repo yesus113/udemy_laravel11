@@ -19,14 +19,13 @@ class AuthenticatedSessionController extends Controller
 
     public function store(LoginRequest $request): RedirectResponse
 {
-    $request->authenticate();  // Valida credenciales
-    $request->session()->regenerate();  // Regenera la sesión
+    $request->authenticate();  
+    $request->session()->regenerate();  
 
-    // Redirigir según el rol del usuario
     if (auth()->user()->isSuperAdmin()) {
-        return redirect()->route('config.equip');  // Para Sadmin
+        return redirect()->route('config.equip'); 
     }
-    return redirect()->route('dashboard');  // Para admin (rol por defecto)
+    return redirect()->route('dashboard');  
 }
 
     public function destroy(Request $request): RedirectResponse

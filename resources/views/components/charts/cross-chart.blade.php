@@ -1,13 +1,24 @@
-
-
-    <div>
-        <div id="cruzes"></div>
-    </div>
+<div>
+    <div id="cruzes"></div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const chartData = @json($chartConfig['data']);
-        
+
+        console.log("=== DEBUG Highcharts ===");
+        console.log("chartData recibido:", chartData);
+        console.log("Tipo:", typeof chartData);
+        if (Array.isArray(chartData)) {
+            console.log("Es un Array con length:", chartData.length);
+        } else if (chartData && typeof chartData === 'object') {
+            console.log("Es un objeto con keys:", Object.keys(chartData));
+        } else {
+            console.log("chartData vacío o null:", chartData);
+        }
+
+        console.log("Contenido completo:", JSON.stringify(chartData, null, 2));
+
         Highcharts.chart('cruzes', {
             chart: {
                 type: 'line',
@@ -35,7 +46,6 @@
                 min: 0,
                 max: 1000,
                 tickInterval: 50
-                
             },
             tooltip: {
                 shared: true,
@@ -55,7 +65,7 @@
                     }
                 }
             },
-            series: chartData.datasets.map(dataset => ({
+            series: (chartData.datasets ?? []).map(dataset => ({
                 name: dataset.label,
                 data: dataset.data,
                 color: dataset.borderColor,

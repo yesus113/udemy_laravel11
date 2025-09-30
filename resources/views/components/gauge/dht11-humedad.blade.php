@@ -3,63 +3,84 @@
 </div>
 
 <script>
-    // Inicializar el gráfico
-    const humedadGauge = Highcharts.chart('container-dht11-humedad', {
-        chart: {
-            type: 'gauge'
-        },
-        title: {
-            text: 'Humedad'
-        },
-        pane: {
-            startAngle: -90,
-            endAngle: 90,
-            background: null,
-            size: '100%'
-        },
-        yAxis: {
-            min: 0,
-            max: 1000,
-            title: {
-                text: '%'
+    console.log('DHT11 Humd value:', {{ $humedadValue ?? 0 }});
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const humedadValue = {{ $humedadValue ?? 0 }};
+        
+        const humdGauge = Highcharts.chart('container-dht11-humedad', {
+            chart: {
+                type: 'gauge',
+                backgroundColor: 'transparent'
             },
-            plotBands: [{
+            title: {
+                text: 'Humedad'
+            },
+            pane: {
+                startAngle: -90,
+                endAngle: 90,
+                background: null,
+                size: '100%'
+            },
+            yAxis: {
+                min: 0,
+                max: 1000,
+                title: {
+                    text: ''
+                },
+                plotBands: [{
                     from: 0,
                     to: 300,
-                    color: '#3498db'
-                },
-                {
+                    color: '#3498db',
+                    thickness: 20
+                }, {
                     from: 300,
                     to: 600,
-                    color: '#2ecc71'
-                },
-                {
+                    color: '#2ecc71',
+                    thickness: 20
+                }, {
                     from: 600,
                     to: 1000,
-                    color: '#e74c3c'
+                    color: '#e74c3c',
+                    thickness: 20
+                }]
+            },
+            series: [{
+                name: 'Humd Interna',
+                data: [humedadValue],
+                tooltip: {
+                    valueSuffix: ''
+                },
+                dataLabels: {
+                    format: '{y} %',
+                    borderWidth: 0,
+                    color: '#000000'
                 }
-            ]
-        },
-        series: [{
-            name: 'humedad',
-            data: [{{ $humedadValue }}],
-            tooltip: {
-                valueSuffix: ' %'
+            }],
+            credits: {
+                enabled: false
             }
-        }]
-    });
+        });
 
-    // Función para actualizar solo este gauge
-    function actualizarhumedad() {
-        fetch('/ultimo-registro-sensor')
-            .then(response => response.json())
-            .then(data => {
-                humedadGauge.series[0].points[0].update(data.humedad);
-            });
-    }
+        function actualizarHumd() {
+            fetch("{{ url('/ultimo-registro-sensor') }}")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && typeof data.humedad !== 'undefined') {
+                        humdGauge.series[0].points[0].update(Number(data.humedad));
+                    }
+                })
+                .catch(error => {
+                    console.log('Error en actualización:', error);
+                });
+        }
 
-    // Actualizar cada 5 segundos
-    document.addEventListener('DOMContentLoaded', function() {
-        setInterval(actualizarhumedad, 5000);
+        //5 segundos
+        setInterval(actualizarHumd, 5000);
     });
 </script>

@@ -53,7 +53,7 @@ class ConfigurationController extends Controller
     public function create()
     {   $user = User::pluck('id', 'name');
         $config = new Configuration();
-        return view ('sensores/configuration/create', compact('config', 'user'));
+        return view ('sensores.configuration.create', compact('config', 'user'));
     }
 
     
