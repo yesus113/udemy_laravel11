@@ -11,4 +11,4 @@ Este proyecto consiste en una aplicación web monolítica desarrollada con **Lar
 La arquitectura central se basa en:
 * **Dispositivos ESP32:** Encargados de la recopilación de mediciones ambientales.
 * **Capa de API REST (Laravel):** Canal seguro y eficiente para la transferencia de datos entre el microcontrolador y la aplicación.
-* **Plataforma Web (Laravel Blade, JS):** Interfaz para la visualización de datos en dashboards, reportes y análisis históricos.
+* **Plataforma Web (Laravel Blade, JS):** Interfaz para la visualización de datos en dashboards en tiempo oportuno y analisis de datos semanales y mensuales por medio de graficas.
